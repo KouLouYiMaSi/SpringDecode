@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+                        http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+                        http://www.springframework.org/schema/context
+                        http://www.springframework.org/schema/context/spring-context-4.0.xsd
+          http://www.springframework.org/schema/aop
+            http://www.springframework.org/schema/aop/spring-aop-2.0.xsd">
+
+	<bean id="springHelloWorld"
+		class="com.yiibai.tutorial.spring.helloworld.impl.SpringHelloWorld"></bean>
+
+	<bean id="strutsHelloWorld"
+		class="com.yiibai.tutorial.spring.helloworld.impl.StrutsHelloWorld"></bean>
+
+
+	<bean id="helloWorldService" class="com.yiibai.tutorial.spring.helloworld.HelloWorldService">
+		<property name="helloWorld" ref="strutsHelloWorld" />
+	</bean>
+
+	<bean id="zhaobenshan" class="com.yiibai.tutorial.spring.aop.Zhaobenshan" />
+
+	<bean id="adviceElephantTools" class="com.yiibai.tutorial.spring.aop.AdviceElephantTools" />
+
+	<aop:config>
+		<aop:aspect id="myaop" ref="adviceElephantTools">
+			<aop:pointcut id="logPointcut"
+				expression="execution(* com.yiibai.tutorial.spring.aop.*.*(..))" />
+			<aop:before method="before" pointcut-ref="logPointcut" />
+			<aop:after method="after" pointcut-ref="logPointcut" />
+		</aop:aspect>
+	</aop:config>
+
+</beans>
